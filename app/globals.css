@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
+  --color-splitwise-green: #5bc5a7;
+  --color-splitwise-dark: #393939;
+  --color-splitwise-light: #f6f6f6;
+  --color-splitwise-red: #ff652f;
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0a0a0a !important;
+  color: #ededed;
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #5bc5a7, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Force Clerk components dark theme */
+.cl-card,
+.cl-cardBox {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+  border-radius: 1rem !important;
+}
+
+.cl-footer {
+  background: transparent !important;
+}
+
+.cl-footerAction__signIn,
+.cl-footerAction__signUp {
+  background: transparent !important;
+}
+
+.cl-internal-b3fm6y {
+  background: transparent !important;
+}
+
+/* Force Clerk text colors for visibility on dark background */
+.cl-headerTitle,
+.cl-headerSubtitle,
+.cl-socialButtonsBlockButtonText,
+.cl-dividerText,
+.cl-formFieldLabel,
+.cl-footerActionText,
+.cl-footerActionLink,
+.cl-button {
+  color: #ededed !important;
+}
+
+.cl-dividerLine {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }

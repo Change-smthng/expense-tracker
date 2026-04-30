@@ -46,7 +46,7 @@ export default function AddExpenseForm() {
       router.push('/dashboard')
     } catch (err) {
       console.error(err)
-      setError('Unable to save expense. Make sure backend is running at http://localhost:8000')
+      setError('Unable to save expense. Make sure backend is running/accessible')
     } finally {
       setSubmitting(false)
     }

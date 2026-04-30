@@ -46,7 +46,9 @@ export default function SettleForm() {
     async function loadSmartSuggestions() {
       if (!userId) return
       try {
-        const groupsRes = await fetch(`http://localhost:8000/api/groups?clerk_id=${userId}`)
+        const groupsRes = await fetch(`/api/groups`, {
+          headers: { Authorization: userId }
+        })
         if (!groupsRes.ok) throw new Error('Failed to load groups')
         const groupsData: GroupSummary[] = await groupsRes.json()
 
@@ -59,7 +61,9 @@ export default function SettleForm() {
 
         const groupBalances = await Promise.all(
           sourceGroups.map(async (group) => {
-            const balancesRes = await fetch(`http://localhost:8000/api/balances/group/${group.id}?clerk_id=${userId}`)
+            const balancesRes = await fetch(`/api/balances/group/${group.id}`, {
+              headers: { Authorization: userId }
+            })
             if (!balancesRes.ok) return [] as BalanceEntry[]
             const balancesData: BalanceEntry[] = await balancesRes.json()
             return balancesData.map((entry) => ({ ...entry, amount: Number(entry.amount) }))
@@ -129,9 +133,12 @@ export default function SettleForm() {
         paid_to: selectedSuggestion.userId,
         amount: Number(customAmount),
       }
-      const res = await fetch(`http://localhost:8000/api/settlements?clerk_id=${userId}`, {
+      const res = await fetch(`/api/settlements`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: userId
+        },
         body: JSON.stringify(body),
       })
       if (!res.ok) throw new Error('Failed to record settlement')
@@ -139,7 +146,7 @@ export default function SettleForm() {
       router.push(`/groups/${selectedGroupId}`)
     } catch (err) {
       console.error(err)
-      alert('Unable to record settlement. Check backend at http://localhost:8000')
+      alert('Unable to record settlement. Check backend is accessible.')
     } finally {
       setSubmitting(false)
     }

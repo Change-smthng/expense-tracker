@@ -16,9 +16,12 @@ export default function AddGroupForm() {
     setCreating(true)
 
     try {
-      const res = await fetch(`http://localhost:8000/api/groups?clerk_id=${userId}`, {
+      const res = await fetch(`/api/groups`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: userId
+        },
         body: JSON.stringify({ name, description, icon: '📦', member_ids: [] }),
       })
       if (!res.ok) throw new Error('Failed to create')
@@ -26,7 +29,7 @@ export default function AddGroupForm() {
       router.push(`/groups/${data.id}`)
     } catch (err) {
       console.error(err)
-      alert('Unable to create group. Check backend running at http://localhost:8000')
+      alert('Unable to create group. Check backend is accessible.')
     } finally {
       setCreating(false)
     }

@@ -19,7 +19,7 @@ export default function SignInPage() {
                 </div>
 
                 {/* Clerk SignIn component */}
-                <div className="flex justify-center [&_.cl-card]:bg-transparent [&_.cl-card]:shadow-none [&_.cl-card]:border-none [&_.cl-cardBox]:bg-transparent [&_.cl-cardBox]:shadow-none [&_.cl-footer]:bg-transparent">
+                <div className="flex justify-center">
                     <SignIn
                         appearance={{
                             baseTheme: dark,
